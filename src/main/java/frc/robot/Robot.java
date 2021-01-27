@@ -8,6 +8,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.cscore.UsbCamera;
+import frc.robot.subsystems.Base;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Camera;
+import frc.robot.subsystems.Storage;
+import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.Pneumatics;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -18,6 +27,13 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  public static final Base base = new Base();
+  public static final Camera camera = new Camera();
+  public static final Flywheel flywheel = new Flywheel();
+  public static final Intake intake = new Intake();
+  public static final Storage storage = new Storage();
+  public static final Pneumatics pneumatics = new Pneumatics();
 
   /**
    * This function is run when the robot is first started up and should be used for any
