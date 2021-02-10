@@ -11,4 +11,8 @@ public final class Constants {
     public static final int KLeftBackAngleTalon = 5;
     public static final int KRightFrontAngleTalon = 6;
     public static final int KRightBackAngleTalon = 7;
+
+    //FLywheel
+    public static final int KFlywheelTopSpark = 0;
+    public static final int KFlywheelBottomSpark = 1;
 }
