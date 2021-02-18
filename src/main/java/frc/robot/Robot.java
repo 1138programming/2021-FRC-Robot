@@ -15,6 +15,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Storage;
 import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.Funnel;
 import frc.robot.subsystems.Pneumatics;
 
 /**
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
   public static final Base base = new Base();
   public static final Camera camera = new Camera();
   public static final Flywheel flywheel = new Flywheel();
+  public static final Funnel funnel = new Funnel();
   public static final Intake intake = new Intake();
   public static final Storage storage = new Storage();
   public static final Pneumatics pneumatics = new Pneumatics();

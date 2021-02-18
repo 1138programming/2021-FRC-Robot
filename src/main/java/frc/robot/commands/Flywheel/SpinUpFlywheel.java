@@ -14,6 +14,7 @@ public class SpinUpFlywheel extends CommandBase
 
   public SpinUpFlywheel(double topSetpoint, double bottomSetpoint) 
   {
+    //setting top and bottom setpoints in this command
     this.topSetpoint = topSetpoint;
     this.bottomSetpoint = bottomSetpoint;
 
@@ -24,6 +25,7 @@ public class SpinUpFlywheel extends CommandBase
   @Override
   public void initialize() 
   {
+    //sending the setpoints to the flywheel subsystem
     Robot.flywheel.setSetpoints(topSetpoint, bottomSetpoint);
   }
 
@@ -31,7 +33,7 @@ public class SpinUpFlywheel extends CommandBase
   @Override
   public void execute() 
   {
-
+    //getting the PID constants from smartdashboard and setting them 
     Robot.flywheel.setTopConstants(
       SmartDashboard.getNumber("Flywheel Top P", 0.0),
       SmartDashboard.getNumber("Flywheel Top I", 0.0),
@@ -45,10 +47,12 @@ public class SpinUpFlywheel extends CommandBase
       SmartDashboard.getNumber("Flywheel Bottom F", 0.0)
     );
 
+    //get setpoints from smartdashboard and send them into the flywheel subsystem
     double topSetpoint = SmartDashboard.getNumber("Flywheel Top Setpoint", 0.0);
     double bottomSetpoint = SmartDashboard.getNumber("Flywheel Bottom Setpoint", 0.0);
     Robot.flywheel.setSetpoints(topSetpoint, bottomSetpoint);
 
+    //move the flywheel according to the PID controller calculations
     Robot.flywheel.PIDMove();
   }
 
@@ -63,6 +67,7 @@ public class SpinUpFlywheel extends CommandBase
   @Override
   public boolean isFinished() 
   {
+    //no end condition, command does not end on its own
     return false;
   }
 }

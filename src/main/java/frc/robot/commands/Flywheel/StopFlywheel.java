@@ -28,6 +28,7 @@ public class StopFlywheel extends CommandBase
   @Override
   public void execute() 
   {
+    //set flywheel outputs to 0
     Robot.flywheel.move(0.0, 0.0);
   }
 
@@ -42,6 +43,7 @@ public class StopFlywheel extends CommandBase
   @Override
   public boolean isFinished() 
   {
+    //no end condition, command does not end on its own
     return false;
   }
 }

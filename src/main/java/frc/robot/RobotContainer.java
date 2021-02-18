@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import frc.robot.commands.Flywheel.StopFlywheel;
+import frc.robot.commands.Flywheel.SpinUpFlywheel;
+
 public class RobotContainer {
   // Controller Constants
   private static final int KLogitechDrive = 0;
@@ -48,8 +51,9 @@ public class RobotContainer {
    * The container for the robot.  Contains default commands, OI devices, and commands.
    */
   public RobotContainer() {
-    // Set default commands
-    
+    // Set default commands-commands that run on default without any user input
+    Robot.flywheel.setDefaultCommand(new StopFlywheel());
+
     // Controllers
     logitech = new Joystick(KLogitechDrive);
     xbox = new XboxController(KXboxArms);
@@ -80,7 +84,9 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -13,15 +13,18 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 
 public class Flywheel extends SubsystemBase {
 
+  //Motor controller, Moror encoder, PID controller initialization 
   private final CANSparkMax flywheelTop, flywheelBottom;
   private final CANEncoder topEncoder, bottomEncoder;
   private SlewRateLimiter topLimiter, bottomLimiter;
   private PIDController topController;
   private PIDController bottomController;
   
+  //Motor output initialization
   private double topPWMOutput = 0, bottomPWMOutput = 0;
   private double topSetpoint = 0, bottomSetpoint = 0;
   
+  //PID constatns initialization
   private double topFlywheel_kP = 0;
   private double topFlywheel_kI = 0;
   private double topFlywheel_kD = 0;
@@ -73,20 +76,25 @@ public class Flywheel extends SubsystemBase {
 
   public void move(double topPWM, double bottomPWM) 
   {
+    //using slewrate limiters to limit output values
     topPWMOutput = topLimiter.calculate(topPWM);
     bottomPWMOutput = bottomLimiter.calculate(bottomPWM);;
 
+    //send the output values to the motors
     flywheelTop.set(topPWMOutput);
     flywheelBottom.set(bottomPWMOutput);
   }
 
+  /*move using PID controller and setpoints*/
   public void PIDMove() 
   {
+    //calculate top and bottom output values using PID controller class
     topPWMOutput = topLimiter.calculate(topController.calculate(topEncoder.getVelocity(), topSetpoint));
     bottomPWMOutput = bottomLimiter.calculate(bottomController.calculate(bottomEncoder.getVelocity(), bottomSetpoint));
 
     //implement feedforward?
 
+    //send the output values to the motors
     flywheelTop.set(topPWMOutput);
     flywheelBottom.set(bottomPWMOutput);
   }
@@ -106,24 +114,29 @@ public class Flywheel extends SubsystemBase {
     return bottomController.getSetpoint();
   }
 
+  //PID controller method, check to see if top setpoint is reached
   public boolean atTopSetpoint() {
     return topController.atSetpoint();
   }
 
+  //PID controller method, check to see if bottom setpoint is reached
   public boolean atBottomSetpoint() {
     return bottomController.atSetpoint();
   }
 
+  //set top and bottom setpoints
   public void setSetpoints(double topSetpoint, double bottomSetpoint) {
     this.topSetpoint = topSetpoint;
     this.bottomSetpoint = bottomSetpoint;
   }
 
+  //reset the top and bottom PID controllers
   public void reset() {
     topController.reset();
     bottomController.reset();
   }
 
+  //setting the PID constants for the top PID controller
   public void setTopConstants(double Kp, double Ki, double Kd, double Kf) {
     topController.setP(Kp);
     topController.setI(Ki);
@@ -131,6 +144,7 @@ public class Flywheel extends SubsystemBase {
     // topController.setF(Kf);
   }
 
+  //setting the PID constants for the bottom PID controller
   public void setBottomConstants(double Kp, double Ki, double Kd, double Kf) {
     bottomController.setP(Kp);
     bottomController.setI(Ki);
