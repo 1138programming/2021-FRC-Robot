@@ -9,6 +9,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Flywheel.StopFlywheel;
 import frc.robot.commands.Flywheel.SpinUpFlywheel;
 
+import frc.robot.commands.Funnel.FunnelIn;
+import frc.robot.commands.Funnel.FunnelOut;
+import frc.robot.commands.Funnel.FunnelStop;
+
 public class RobotContainer {
   // Controller Constants
   private static final int KLogitechDrive = 0;
