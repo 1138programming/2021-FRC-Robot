@@ -15,4 +15,10 @@ public final class Constants {
     //FLywheel
     public static final int KFlywheelTopSpark = 0;
     public static final int KFlywheelBottomSpark = 1;
+
+    //Storage
+    public static final int KStorageSpark = 9; 
+    public static final int KBallSensor1 = 10;
+    public static final int KBallSensor2 = 11;
+
 }
