@@ -12,6 +12,12 @@ import frc.robot.commands.Flywheel.SpinUpFlywheel;
 import frc.robot.commands.Funnel.FunnelIn;
 import frc.robot.commands.Funnel.FunnelOut;
 import frc.robot.commands.Funnel.FunnelStop;
+import frc.robot.commands.Funnel.MoveFunnelWithJoysticks;
+
+import frc.robot.commands.Storage.StorageIn;
+import frc.robot.commands.Storage.StorageOut;
+import frc.robot.commands.Storage.StorageStop;
+import frc.robot.commands.Storage.MoveStorageWithJoysticks;
 
 public class RobotContainer {
   // Controller Constants
@@ -33,6 +39,8 @@ public class RobotContainer {
 
   private static final int KLeftYAxis = 1;
   private static final int KRightYAxis = 3;
+  private static final int KLeftXAxis = 0;
+  private static final int KRightXAxis = 2;
 
   //Xbox Button Constants
   public static final int KXboxButtonA = 1; 
@@ -57,6 +65,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Set default commands-commands that run on default without any user input
     Robot.flywheel.setDefaultCommand(new StopFlywheel());
+    Robot.funnel.setDefaultCommand(new MoveFunnelWithJoysticks());
+    Robot.storage.setDefaultCommand(new MoveStorageWithJoysticks());
 
     // Controllers
     logitech = new Joystick(KLogitechDrive);
@@ -101,4 +111,74 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return null;
   }
+
+  public double getLogiRightYAxis() {
+    final double Y = logitech.getRawAxis(KRightYAxis);
+    if (Y > KDeadZone || Y < -KDeadZone)
+      return -Y;
+    else
+      return 0;
+  }
+
+  public double getLogiLeftYAxis() {
+    final double Y = logitech.getRawAxis(KLeftYAxis);
+    if(Y > KDeadZone || Y < -KDeadZone)
+      return -Y;
+    else 
+      return 0; 
+  }
+
+  public double getLogiRightXAxis() {
+    double X = logitech.getRawAxis(KRightXAxis);
+    if (X > KDeadZone || X < -KDeadZone) {
+      return -X;
+    } else {
+      return 0; 
+    }
+  }
+
+  public double getLogiLeftXAxis() {
+    double X = logitech.getRawAxis(KLeftXAxis);
+    if (X > KDeadZone || X < -KDeadZone) {
+      return -X;
+    } else {
+      return 0;
+    }
+  }
+
+  public double getXboxLeftXAxis() {
+    final double X = xbox.getRawAxis(KLeftXAxis);
+    if(X > KDeadZone || X < -KDeadZone)
+      return -X;
+    else 
+      return 0;
+  }
+
+  public double getXboxRightXAxis() {
+    final double X = xbox.getRawAxis(KRightXAxis);
+    if (X > KDeadZone || X < -KDeadZone)
+      return -X;
+    else
+      return 0;
+  }
+
+  public double getXboxLeftYAxis() {
+    final double Y = xbox.getRawAxis(KLeftYAxis);
+    if(Y > KDeadZone || Y < -KDeadZone)
+      return -Y;
+    else 
+      return 0;
+  }
+
+  public double getXboxRightYAxis() {
+    final double Y = xbox.getRawAxis(KRightYAxis);
+    if (Y > KDeadZone || Y < -KDeadZone)
+      return -Y;
+    else
+      return 0;
+  }
+
+  public double mapRange(double inputLowerBound, double inputUpperBound, double outputLowerBound, double outputUpperBound, double inputValue){
+		return outputLowerBound + ((inputValue - inputLowerBound)*(outputUpperBound - outputLowerBound))/(inputUpperBound - inputLowerBound);
+	}
 }

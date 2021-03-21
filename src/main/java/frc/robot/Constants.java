@@ -19,7 +19,14 @@ public final class Constants {
     //Funnel
     public static final int KFunnelSpark = 10;
 
+    //Storage
+    public static final int KStorageFrontSpark = 11; 
+    public static final int KStorageBackSpark = 12; 
+    public static final int KBallSensor1 = 13;
+    public static final int KBallSensor2 = 14;
+
 // Default PWM Values
     //Funnel
     public static final double KFunnelPWM = 1;
+    public static final double KStoragePWM = 1;
 }
