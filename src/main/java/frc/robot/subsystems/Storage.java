@@ -42,6 +42,7 @@ public class Storage extends SubsystemBase {
     ballSensor1 = new DigitalInput(KBallSensor1);
     ballSensor2 = new DigitalInput(KBallSensor2);
 
+    SmartDashboard.putNumber("StoragePWM", 0);
 
     //stage2Limiter = new SlewRateLimiter(1.95);
   }
@@ -49,6 +50,9 @@ public class Storage extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("storageFrontPWM", getStorageFrontPWM());
+    SmartDashboard.putNumber("storageBackPWM", getStorageBackPWM());
+
   }
 
   /**

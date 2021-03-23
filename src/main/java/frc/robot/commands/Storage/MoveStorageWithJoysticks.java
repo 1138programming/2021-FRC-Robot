@@ -7,6 +7,7 @@ package frc.robot.commands.Storage;
 import frc.robot.Robot;
 import static frc.robot.Constants.*;
 import frc.robot.subsystems.Storage;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class MoveStorageWithJoysticks extends CommandBase {
@@ -17,13 +18,16 @@ public class MoveStorageWithJoysticks extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double PWM = Robot.m_robotContainer.getXboxLeftXAxis();
-    Robot.storage.move(PWM);
+    //double PWM = Robot.m_robotContainer.getXboxLeftXAxis();
+    //Robot.storage.move(PWM);
+    Robot.storage.move(SmartDashboard.getNumber("StoragePWM", 0));
   }
 
   // Called once the command ends or is interrupted.

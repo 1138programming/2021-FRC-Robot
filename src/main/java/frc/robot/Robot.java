@@ -27,7 +27,7 @@ import frc.robot.subsystems.Pneumatics;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  public static final RobotContainer m_robotContainer = new RobotContainer();
+  public static RobotContainer m_robotContainer;
 
   public static final Base base = new Base();
   public static final Camera camera = new Camera();
@@ -43,6 +43,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    m_robotContainer = new RobotContainer();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
   }
