@@ -12,12 +12,12 @@ import frc.robot.commands.Flywheel.SpinUpFlywheel;
 import frc.robot.commands.Funnel.FunnelIn;
 import frc.robot.commands.Funnel.FunnelOut;
 import frc.robot.commands.Funnel.FunnelStop;
-import frc.robot.commands.Funnel.MoveFunnelWithJoysticks;
+import frc.robot.commands.Funnel.ManualMoveFunnel;
 
 import frc.robot.commands.Storage.StorageIn;
 import frc.robot.commands.Storage.StorageOut;
 import frc.robot.commands.Storage.StorageStop;
-import frc.robot.commands.Storage.MoveStorageWithJoysticks;
+import frc.robot.commands.Storage.ManualMoveStorage;
 
 public class RobotContainer {
   // Controller Constants
@@ -65,8 +65,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Set default commands-commands that run on default without any user input
     Robot.flywheel.setDefaultCommand(new StopFlywheel());
-    Robot.funnel.setDefaultCommand(new MoveFunnelWithJoysticks());
-    Robot.storage.setDefaultCommand(new MoveStorageWithJoysticks());
+    Robot.funnel.setDefaultCommand(new ManualMoveFunnel());
+    Robot.storage.setDefaultCommand(new ManualMoveStorage());
 
     // Controllers
     logitech = new Joystick(KLogitechDrive);

@@ -10,9 +10,9 @@ import frc.robot.subsystems.Storage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class MoveStorageWithJoysticks extends CommandBase {
-  /** Creates a new MoveStorageWithJoysticks. */
-  public MoveStorageWithJoysticks() {
+public class ManualMoveStorage extends CommandBase {
+  /** Creates a new ManualMoveStorage. */
+  public ManualMoveStorage() {
     addRequirements(Robot.storage);
   }
 
@@ -25,10 +25,8 @@ public class MoveStorageWithJoysticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double PWM = Robot.m_robotContainer.getLogiLeftXAxis();
+    double PWM = SmartDashboard.getNumber("StoragePWM", 0);
     Robot.storage.move(PWM);
-    // double PWM = SmartDashboard.getNumber("StoragePWM", 0);
-    // Robot.storage.move(PWM);
   }
 
   // Called once the command ends or is interrupted.

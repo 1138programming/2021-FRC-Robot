@@ -5,9 +5,9 @@ import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class MoveFunnelWithJoysticks extends CommandBase {
+public class ManualMoveFunnel extends CommandBase {
     
-    public MoveFunnelWithJoysticks() {
+    public ManualMoveFunnel() {
         addRequirements(Robot.funnel);
     }
 
@@ -17,8 +17,8 @@ public class MoveFunnelWithJoysticks extends CommandBase {
 
     @Override
     public void execute() {
-        double PWM = Robot.m_robotContainer.getLogiRightXAxis();
-        Robot.funnel.move(PWM);
+        // double PWM = SmartDashboard.getNumber("FunnelPWM", 0);
+        // Robot.funnel.move(PWM);
     }
 
     @Override

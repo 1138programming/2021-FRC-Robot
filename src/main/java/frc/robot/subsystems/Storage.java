@@ -21,7 +21,7 @@ public class Storage extends SubsystemBase {
 
   // Create the sensors
   private final DigitalInput ballSensor1;
-  private final DigitalInput ballSensor2;
+  //private final DigitalInput ballSensor2;
 
   //Variables
   private boolean ballSensor1LastState = false; // Keeps track of the last state of the 1st ball sensor
@@ -40,8 +40,7 @@ public class Storage extends SubsystemBase {
     storageFront = new CANSparkMax(KStorageFrontSpark, CANSparkMaxLowLevel.MotorType.kBrushless);
     storageBack = new CANSparkMax(KStorageBackSpark, CANSparkMaxLowLevel.MotorType.kBrushless);
     ballSensor1 = new DigitalInput(KBallSensor1);
-    ballSensor2 = new DigitalInput(KBallSensor2);
-
+    //ballSensor2 = new DigitalInput(KBallSensor2);
 
     //stage2Limiter = new SlewRateLimiter(1.95);
   }
@@ -75,9 +74,9 @@ public class Storage extends SubsystemBase {
 
   }
   
-  public boolean getBallSensor2() {
-    return ballSensor2.get();
-  }
+  // public boolean getBallSensor2() {
+  //   return ballSensor2.get();
+  // }
 
   public double getStorageFrontPWM() {
     return storageFrontPWM;
