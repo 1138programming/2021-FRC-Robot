@@ -42,7 +42,6 @@ public class Storage extends SubsystemBase {
     ballSensor1 = new DigitalInput(KBallSensor1);
     ballSensor2 = new DigitalInput(KBallSensor2);
 
-    SmartDashboard.putNumber("StoragePWM", 0);
 
     //stage2Limiter = new SlewRateLimiter(1.95);
   }

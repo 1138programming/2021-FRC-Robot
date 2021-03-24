@@ -147,11 +147,12 @@ public class RobotContainer {
   }
 
   public double getXboxLeftXAxis() {
-    final double X = xbox.getRawAxis(KLeftXAxis);
-    if(X > KDeadZone || X < -KDeadZone)
-      return -X;
-    else 
-      return 0;
+    // final double X = xbox.getX(GenericHID.Hand.kLeft);
+    // if(X > KDeadZone || X < -KDeadZone)
+    //   return -X;
+    // else 
+    //   return 0;
+    return xbox.getX(GenericHID.Hand.kLeft);
   }
 
   public double getXboxRightXAxis() {

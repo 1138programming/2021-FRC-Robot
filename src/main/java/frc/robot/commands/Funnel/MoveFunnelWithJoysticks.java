@@ -17,7 +17,7 @@ public class MoveFunnelWithJoysticks extends CommandBase {
 
     @Override
     public void execute() {
-        double PWM = Robot.m_robotContainer.getXboxRightXAxis();
+        double PWM = Robot.m_robotContainer.getLogiRightXAxis();
         Robot.funnel.move(PWM);
     }
 

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.Funnel.FunnelStop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static frc.robot.Constants.*;
@@ -14,6 +15,7 @@ public class Funnel extends SubsystemBase {
   private final CANSparkMax funnel;
   
   private final CANEncoder funnelEncoder;
+  private double funnelPWM = 0;
 
   //Creating funnel
   public Funnel() {
@@ -28,17 +30,22 @@ public class Funnel extends SubsystemBase {
   @Override
   public void periodic() {
     //This method is called once per scheduler run
+    SmartDashboard.putNumber("funnelFrontPWM", getFunelPWM());
   }
 
   @Override
   public void simulationPeriodic() {
   }
 
-  public void move(double speed) {
-    funnel.set(speed);
+  public void move(double PWM) {
+    funnelPWM = PWM;
+    funnel.set(PWM);
   }
 
   public double getFunnelVel() {
     return funnelEncoder.getVelocity();
+  }
+  public double getFunelPWM(){
+    return funnelPWM;
   }
 }

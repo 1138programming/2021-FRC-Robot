@@ -25,9 +25,10 @@ public class MoveStorageWithJoysticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //double PWM = Robot.m_robotContainer.getXboxLeftXAxis();
-    //Robot.storage.move(PWM);
-    Robot.storage.move(SmartDashboard.getNumber("StoragePWM", 0));
+    double PWM = Robot.m_robotContainer.getLogiLeftXAxis();
+    Robot.storage.move(PWM);
+    // double PWM = SmartDashboard.getNumber("StoragePWM", 0);
+    // Robot.storage.move(PWM);
   }
 
   // Called once the command ends or is interrupted.
