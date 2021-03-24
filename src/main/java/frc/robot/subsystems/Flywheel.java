@@ -4,9 +4,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.*;
 
-import com.revrobotics.*;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANEncoder;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -14,55 +18,80 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 public class Flywheel extends SubsystemBase {
 
   //Motor controller, Moror encoder, PID controller initialization 
-  private final CANSparkMax flywheelTop, flywheelBottom;
-  private final CANEncoder topEncoder, bottomEncoder;
+  private final TalonFX flywheelTop, flywheelBottom;
   private SlewRateLimiter topLimiter, bottomLimiter;
-  private PIDController topController;
-  private PIDController bottomController;
+  private PIDController topController, bottomController;
+
+  // this is constant for Talon FX
+  private final int kUnitsPerRevolution = 2048; 
+
+  //Talon built-in sensor readings
+  private double topSenVel;
+  private double bottomSenVel;
+  private double topRotPerSec;
+  private double bottomRotPerSec;
   
   //Motor output initialization
   private double topPWMOutput = 0, bottomPWMOutput = 0;
   private double topSetpoint = 0, bottomSetpoint = 0;
   
   //PID constatns initialization
-  private double topFlywheel_kP = 0;
-  private double topFlywheel_kI = 0;
-  private double topFlywheel_kD = 0;
-  private double bottomFlywheel_kP = 0;
-  private double bottomFlywheel_kI = 0;
-  private double bottomFlywheel_kD = 0;
+  private double flywheelTop_kP = 0;
+  private double flywheelTop_kI = 0;
+  private double flywheelTop_kD = 0;
+  private double flywheelBottom_kP = 0;
+  private double flywheelBottom_kI = 0;
+  private double flywheelBottom_kD = 0;
 
-  // private double topFlywheel_kF = 0;
-  // private double bottomFlywheel_kF = 0;
+  // private double flywheelTop_kF = 0;
+  // private double flywheelBottom_kF = 0;
 
   public Flywheel() 
   {
      // Create SparkMax objects
-     flywheelTop = new CANSparkMax(KFlywheelTopSpark, CANSparkMaxLowLevel.MotorType.kBrushless);
-     flywheelBottom = new CANSparkMax(KFlywheelBottomSpark, CANSparkMaxLowLevel.MotorType.kBrushless);
+     flywheelTop = new TalonFX(KFlywheelTopTalon);
+     flywheelBottom = new TalonFX(KFlywheelBottomTalon);
  
-     // Configure spark. Factory defaults are restored, so every necessary configuration is included here
-     flywheelTop.restoreFactoryDefaults();
-     flywheelBottom.restoreFactoryDefaults();
+    //Factory Default all hardware to prevent unexpected behaviour
+		flywheelTop.configFactoryDefault();
+    flywheelBottom.configFactoryDefault();
+    
+     //inverting the bottom flywheel spin direction
      flywheelTop.setInverted(true);
      flywheelBottom.setInverted(false);
- 
-     // Burn configurations to flash memory. This is where the sparks get configured upon being rebooted.
-     // This protects against wrong configurations if the robot reboots during a match
-     flywheelTop.burnFlash();
-     flywheelBottom.burnFlash();
- 
-     // Get encoder objects from each spark
-     topEncoder = flywheelTop.getEncoder();
-     bottomEncoder = flywheelBottom.getEncoder();
 
-      // Slew rate limits to prevent the motor PWM values from changing too fast
+     //setting talons' neutral mode
+     flywheelTop.setNeutralMode(NeutralMode.Brake);
+     flywheelBottom.setNeutralMode(NeutralMode.Brake);
+ 
+    //  flywheelTop.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
+    //  flywheelBottom.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
+
+      //Slew rate limits to prevent the motor PWM values from changing too fast
       topLimiter = new SlewRateLimiter(4);
       bottomLimiter = new SlewRateLimiter(4);
 
+      //get sensor raw values (packed in teh form of TalonFXSensorCollection objects)
+      TalonFXSensorCollection topSensorVals = flywheelTop.getSensorCollection();
+      TalonFXSensorCollection bottomSensorVals = flywheelBottom.getSensorCollection();
+
+      //double topSenPos = topSensorVals.getIntegratedSensorPosition(); /* position units */
+      //double bottomSenPos = bottomSensorVals.getIntegratedSensorPosition(); 
+
+      //extracting raw sensor values from TalonFXSensorCollection objects
+		  topSenVel = topSensorVals.getIntegratedSensorVelocity(); /* position units per 100ms */
+		  bottomSenVel = bottomSensorVals.getIntegratedSensorVelocity();
+
+		  //double topNumOfRotations = topSenPos / kUnitsPerRevolution;
+      //double bottomNumOfRotations = bottomSenPos / kUnitsPerRevolution;
+      
+      //conversion to per second
+		  topRotPerSec = topSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
+		  bottomRotPerSec = bottomSenVel / kUnitsPerRevolution * 10;
+
       //* PID Stuff *//
-      topController = new PIDController(topFlywheel_kP, topFlywheel_kI, topFlywheel_kD);
-      bottomController = new PIDController(bottomFlywheel_kP, bottomFlywheel_kI, bottomFlywheel_kD);
+      topController = new PIDController(flywheelTop_kP, flywheelTop_kI, flywheelTop_kD);
+      bottomController = new PIDController(flywheelBottom_kP, flywheelBottom_kI, flywheelBottom_kD);
       topController.setTolerance(5, 10);
       bottomController.setTolerance(5, 10);
 
@@ -81,30 +110,38 @@ public class Flywheel extends SubsystemBase {
     bottomPWMOutput = bottomLimiter.calculate(bottomPWM);;
 
     //send the output values to the motors
-    flywheelTop.set(topPWMOutput);
-    flywheelBottom.set(bottomPWMOutput);
+    flywheelTop.set(ControlMode.PercentOutput, topPWMOutput);
+    flywheelBottom.set(ControlMode.PercentOutput, bottomPWMOutput);
   }
 
   /*move using PID controller and setpoints*/
   public void PIDMove() 
   {
     //calculate top and bottom output values using PID controller class
-    topPWMOutput = topLimiter.calculate(topController.calculate(topEncoder.getVelocity(), topSetpoint));
-    bottomPWMOutput = bottomLimiter.calculate(bottomController.calculate(bottomEncoder.getVelocity(), bottomSetpoint));
+    topPWMOutput = topLimiter.calculate(topController.calculate(topRotPerSec, topSetpoint));
+    bottomPWMOutput = bottomLimiter.calculate(bottomController.calculate(bottomRotPerSec, bottomSetpoint));
 
     //implement feedforward?
 
     //send the output values to the motors
-    flywheelTop.set(topPWMOutput);
-    flywheelBottom.set(bottomPWMOutput);
+    flywheelTop.set(ControlMode.PercentOutput, topPWMOutput);
+    flywheelBottom.set(ControlMode.PercentOutput, bottomPWMOutput);
+  }
+
+  public double getTopVelPerSec() {
+    return topRotPerSec;
+  }
+  
+  public double getBottomVelPerSec() {
+    return bottomRotPerSec;
   }
 
   public double getTopVel() {
-    return topEncoder.getVelocity();
+    return topSenVel;
   }
 
   public double getBottomVel() {
-    return bottomEncoder.getVelocity();
+    return bottomSenVel;
   }
 
   public double getTopSetpoint() {
