@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.Flywheel.StopFlywheel;
 import frc.robot.commands.Flywheel.SpinUpFlywheel;
+import frc.robot.commands.Flywheel.ManualMoveFlywheel;
 
 import frc.robot.commands.Funnel.FunnelIn;
 import frc.robot.commands.Funnel.FunnelOut;
@@ -64,7 +65,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Set default commands-commands that run on default without any user input
-    Robot.flywheel.setDefaultCommand(new StopFlywheel());
+    Robot.flywheel.setDefaultCommand(new ManualMoveFlywheel());
     Robot.funnel.setDefaultCommand(new ManualMoveFunnel());
     Robot.storage.setDefaultCommand(new ManualMoveStorage());
 
