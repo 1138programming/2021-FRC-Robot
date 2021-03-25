@@ -10,6 +10,9 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
@@ -87,7 +90,13 @@ public class Flywheel extends SubsystemBase {
       
       //conversion to per second
 		  topRotPerSec = topSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
-		  bottomRotPerSec = bottomSenVel / kUnitsPerRevolution * 10;
+      bottomRotPerSec = bottomSenVel / kUnitsPerRevolution * 10;
+      
+      //Current limiting 
+      flywheelTop.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 10, 15, 0.5));
+      flywheelBottom.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 10, 15, 0.5));
+      flywheelTop.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 20, 25, 1.0));
+      flywheelBottom.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 20, 25, 1.0));
 
       //* PID Stuff *//
       topController = new PIDController(flywheelTop_kP, flywheelTop_kI, flywheelTop_kD);
@@ -107,7 +116,7 @@ public class Flywheel extends SubsystemBase {
   {
     //using slewrate limiters to limit output values
     topPWMOutput = topLimiter.calculate(topPWM);
-    bottomPWMOutput = bottomLimiter.calculate(bottomPWM);;
+    bottomPWMOutput = bottomLimiter.calculate(bottomPWM);
 
     //send the output values to the motors
     flywheelTop.set(ControlMode.PercentOutput, topPWMOutput);

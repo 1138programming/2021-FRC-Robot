@@ -4,6 +4,7 @@ import static frc.robot.Constants.*;
 
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -42,6 +43,8 @@ public class Storage extends SubsystemBase {
     ballSensor1 = new DigitalInput(KBallSensor1);
     //ballSensor2 = new DigitalInput(KBallSensor2);
 
+    storageFront.setIdleMode(IdleMode.kBrake);
+    storageBack.setIdleMode(IdleMode.kBrake);
     //stage2Limiter = new SlewRateLimiter(1.95);
   }
 
@@ -50,6 +53,7 @@ public class Storage extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("storageFrontPWM", getStorageFrontPWM());
     SmartDashboard.putNumber("storageBackPWM", getStorageBackPWM());
+    SmartDashboard.putBoolean("BS1", getBallSensor1());
 
   }
 
@@ -67,6 +71,14 @@ public class Storage extends SubsystemBase {
 
     storageFront.set(PWM);
     storageBack.set(-PWM);         //Storage Motors run in opposite directions when powering the belt
+  }
+  public void moveFront(double PWM) {
+    storageFrontPWM = PWM;
+    storageFront.set(PWM);
+  }
+  public void moveBack(double PWM) {
+    storageBackPWM = -PWM;
+    storageBack.set(-PWM);
   }
 
   public boolean getBallSensor1() {

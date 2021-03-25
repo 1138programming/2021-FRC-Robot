@@ -13,20 +13,20 @@ public final class Constants {
     public static final int KRightBackAngleTalon = 7;
 
     //FLywheel
-    public static final int KFlywheelTopTalon = 2;      //confirm
-    public static final int KFlywheelBottomTalon = 1;   //confirm
+    public static final int KFlywheelTopTalon = 2;      //confirmed
+    public static final int KFlywheelBottomTalon = 1;   //confirmed
 
     //Funnel
     public static final int KFunnelSpark = 10;
 
     //Storage
-    public static final int KStorageFrontSpark = 2; //confirm
-    public static final int KStorageBackSpark = 1;  //confirm
-    public static final int KBallSensor1 = 1;       //confirm
+    public static final int KStorageFrontSpark = 2; //confirmed
+    public static final int KStorageBackSpark = 1;  //confirmed
+    public static final int KBallSensor1 = 1;       //confirmed
     //public static final int KBallSensor2 = 14;
 
 // Default PWM Values
     //Funnel
     public static final double KFunnelPWM = 1;
-    public static final double KStoragePWM = 1;
+    public static final double KStoragePWM = 0.7;
 }
