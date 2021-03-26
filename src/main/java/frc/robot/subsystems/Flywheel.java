@@ -51,7 +51,7 @@ public class Flywheel extends SubsystemBase {
 
   public Flywheel() 
   {
-     // Create SparkMax objects
+     // Create TalonFX objects
      flywheelTop = new TalonFX(KFlywheelTopTalon);
      flywheelBottom = new TalonFX(KFlywheelBottomTalon);
  
@@ -59,12 +59,12 @@ public class Flywheel extends SubsystemBase {
 		flywheelTop.configFactoryDefault();
     flywheelBottom.configFactoryDefault();
     
-     //inverting the bottom flywheel spin direction
-     flywheelTop.setInverted(true);
-     flywheelBottom.setInverted(false);
+     //inverting the flywheels' spin direction
+     flywheelTop.setInverted(false);
+     flywheelBottom.setInverted(true);
 
      //setting talons' neutral mode
-     flywheelTop.setNeutralMode(NeutralMode.Brake);
+     flywheelTop.setNeutralMode(NeutralMode.Brake);     //Note: Coast mode might be better?
      flywheelBottom.setNeutralMode(NeutralMode.Brake);
  
     //  flywheelTop.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
@@ -74,7 +74,7 @@ public class Flywheel extends SubsystemBase {
       topLimiter = new SlewRateLimiter(4);
       bottomLimiter = new SlewRateLimiter(4);
 
-      //get sensor raw values (packed in teh form of TalonFXSensorCollection objects)
+      //get sensor raw values (packed in the form of TalonFXSensorCollection objects)
       TalonFXSensorCollection topSensorVals = flywheelTop.getSensorCollection();
       TalonFXSensorCollection bottomSensorVals = flywheelBottom.getSensorCollection();
 
