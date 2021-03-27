@@ -18,19 +18,24 @@ public class ManualMoveFlywheel extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putNumber("Top Flywheel Setpoint", 0);
-    SmartDashboard.putNumber("Bottom Flywheel Setpoint", 0);
+    SmartDashboard.putNumber("Top Flywheel Setpoint", 0.0);
+    SmartDashboard.putNumber("Bottom Flywheel Setpoint", 0.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.flywheel.move(0.0,0.0);
+      double topSetpoint = SmartDashboard.getNumber("Top Flywheel Setpoint", 0.0);
+      double bottomSetpoint = SmartDashboard.getNumber("Bottom Flywheel Setpoint", 0.0);
+      Robot.flywheel.setSetpoints(topSetpoint, bottomSetpoint);
+      Robot.flywheel.PIDMove();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    Robot.flywheel.move(0.0, 0.0);
+  }
 
   // Returns true when the command should end.
   @Override

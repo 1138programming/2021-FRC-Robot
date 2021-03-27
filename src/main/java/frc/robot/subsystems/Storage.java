@@ -51,9 +51,9 @@ public class Storage extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("storageFrontPWM", getStorageFrontPWM());
-    SmartDashboard.putNumber("storageBackPWM", getStorageBackPWM());
-    SmartDashboard.putBoolean("BS1", getBallSensor1());
+    // SmartDashboard.putNumber("storageFrontPWM", getStorageFrontPWM());
+    // SmartDashboard.putNumber("storageBackPWM", getStorageBackPWM());
+    // SmartDashboard.putBoolean("BS1", getBallSensor1());
 
   }
 
