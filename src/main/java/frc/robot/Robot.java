@@ -35,7 +35,6 @@ public class Robot extends TimedRobot {
   public static final Funnel funnel = new Funnel();
   public static final Intake intake = new Intake();
   public static final Storage storage = new Storage();
-  public static final Pneumatics pneumatics = new Pneumatics();
 
   /**
    * This function is run when the robot is first started up and should be used for any

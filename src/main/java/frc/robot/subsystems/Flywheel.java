@@ -61,8 +61,7 @@ public class Flywheel extends SubsystemBase {
 		flywheelTop.configFactoryDefault();
     flywheelBottom.configFactoryDefault();
     
-     //inverting the flywheels' spin direction
-    //  flywheelTop.setInverted(false);
+     //inverting the bottom flywheel's spin direction
      flywheelBottom.setInverted(true);
 
      //setting talons' neutral mode
@@ -86,9 +85,6 @@ public class Flywheel extends SubsystemBase {
       //extracting raw sensor values from TalonFXSensorCollection objects
 		  topSenVel = topSensorVals.getIntegratedSensorVelocity(); /* position units per 100ms */
 		  bottomSenVel = bottomSensorVals.getIntegratedSensorVelocity();
-
-		  //double topNumOfRotations = topSenPos / kUnitsPerRevolution;
-      //double bottomNumOfRotations = bottomSenPos / kUnitsPerRevolution;
       
       //conversion to per second
 		  topRotPerSec = topSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
@@ -99,8 +95,6 @@ public class Flywheel extends SubsystemBase {
       flywheelBottom.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 10, 15, 0.5));
       flywheelTop.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 20, 25, 1.0));
       flywheelBottom.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 20, 25, 1.0));
-
-      
       
       //* PID Stuff *//
       topController = new PIDController(flywheelTop_kP, flywheelTop_kI, flywheelTop_kD);
@@ -111,37 +105,34 @@ public class Flywheel extends SubsystemBase {
       SmartDashboard.putNumber("Flywheel Top P", 0);
       SmartDashboard.putNumber("Flywheel Top I", 0);
       SmartDashboard.putNumber("Flywheel Top D", 0);
-      // SmartDashboard.putNumber("Flywheel Top F", topController.getF());
+      // SmartDashboard.putNumber("Flywheel Top F", 0);
       SmartDashboard.putNumber("Flywheel Bottom P", 0);
       SmartDashboard.putNumber("Flywheel Bottom I", 0);
       SmartDashboard.putNumber("Flywheel Bottom D", 0);
-      // SmartDashboard.putNumber("Flywheel Bottom F", bottomController.getF());
+      // SmartDashboard.putNumber("Flywheel Bottom F", 0);
     }
     
     @Override
     public void periodic() 
     {
-      SmartDashboard.putNumber("Top Flywheel Current Output", topPWMOutput);
-      SmartDashboard.putNumber("Bottom Flywheel Current Output", bottomPWMOutput);
-      SmartDashboard.putNumber("top rot per sec", getTopRotPerSec());
-      SmartDashboard.putNumber("bottom rot per sec", getBottomRotPerSec());
+      SmartDashboard.putNumber("Top Flywheel PWM Output", topPWMOutput);
+      SmartDashboard.putNumber("Bottom Flywheel PWM Output", bottomPWMOutput);
+      SmartDashboard.putNumber("Top Rotation(per sec)", getTopRotPerSec());
+      SmartDashboard.putNumber("bottom Rotation(per sec)", getBottomRotPerSec());
 
       smartDashSetTopConstants();
       smartDashSetBottomConstants();
    
-        //get sensor raw values (packed in the form of TalonFXSensorCollection objects)
+      //get sensor raw values (packed in the form of TalonFXSensorCollection objects)
       TalonFXSensorCollection topSensorVals = flywheelTop.getSensorCollection();
       TalonFXSensorCollection bottomSensorVals = flywheelBottom.getSensorCollection();
-  
+      
+      //extracting raw sensor values from TalonFXSensorCollection objects
       topSenPos = topSensorVals.getIntegratedSensorPosition(); /* position units */
       bottomSenPos = bottomSensorVals.getIntegratedSensorPosition(); 
   
-      //extracting raw sensor values from TalonFXSensorCollection objects
       topSenVel = topSensorVals.getIntegratedSensorVelocity(); /* position units per 100ms */
       bottomSenVel = bottomSensorVals.getIntegratedSensorVelocity();
-  
-      //double topNumOfRotations = topSenPos / kUnitsPerRevolution;
-      //double bottomNumOfRotations = bottomSenPos / kUnitsPerRevolution;
       
       //conversion to per second
       topRotPerSec = topSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
@@ -165,7 +156,7 @@ public class Flywheel extends SubsystemBase {
   {
     //calculate top and bottom output values using PID controller class
     topPWMOutput = topLimiter.calculate(topController.calculate(topRotPerSec, topSetpoint));
-    bottomPWMOutput = bottomLimiter.calculate(bottomController.calculate(-bottomRotPerSec, bottomSetpoint));
+    bottomPWMOutput = bottomLimiter.calculate(bottomController.calculate(-bottomRotPerSec, bottomSetpoint)); //reversed rotation sensor input so the calculations would be right
 
     //implement feedforward?
 
@@ -227,7 +218,7 @@ public class Flywheel extends SubsystemBase {
     bottomController.reset();
   }
 
-  //setting the PID constants for the top PID controller
+  //getting the top flywheel PID constants for the top PID controller from smartdashboard
   public void smartDashSetTopConstants() {
     topController.setP(SmartDashboard.getNumber("Flywheel Top P", 0));
     topController.setI(SmartDashboard.getNumber("Flywheel Top I", 0));
@@ -235,7 +226,7 @@ public class Flywheel extends SubsystemBase {
     // topController.setF(Kf);
   }
 
-  //setting the PID constants for the bottom PID controller
+  //getting the bottom flywheel PID constants for the top PID controller from smartdashboard
   public void smartDashSetBottomConstants() {
     bottomController.setP(SmartDashboard.getNumber("Flywheel Bottom P", 0));
     bottomController.setI(SmartDashboard.getNumber("Flywheel Bottom I", 0));

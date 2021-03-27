@@ -30,7 +30,7 @@ public class Funnel extends SubsystemBase {
   @Override
   public void periodic() {
     //This method is called once per scheduler run
-    SmartDashboard.putNumber("funnelFrontPWM", getFunelPWM());
+    // SmartDashboard.putNumber("funnelFrontPWM", getFunelPWM());
   }
 
   @Override
