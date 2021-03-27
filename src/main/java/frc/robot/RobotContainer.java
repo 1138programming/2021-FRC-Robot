@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.Flywheel.StopFlywheel;
 import frc.robot.commands.Flywheel.SpinUpFlywheel;
+import frc.robot.commands.Flywheel.ManualMoveFlywheel;
 
 public class RobotContainer {
   // Controller Constants

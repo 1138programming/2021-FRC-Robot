@@ -34,18 +34,18 @@ public class SpinUpFlywheel extends CommandBase
   public void execute() 
   {
     //getting the PID constants from smartdashboard and setting them 
-    Robot.flywheel.setTopConstants(
-      SmartDashboard.getNumber("Flywheel Top P", 0.0),
-      SmartDashboard.getNumber("Flywheel Top I", 0.0),
-      SmartDashboard.getNumber("Flywheel Top D", 0.0),
-      SmartDashboard.getNumber("Flywheel Top F", 0.0)
-    );
-    Robot.flywheel.setBottomConstants(
-      SmartDashboard.getNumber("Flywheel Bottom P", 0.0),
-      SmartDashboard.getNumber("Flywheel Bottom I", 0.0),
-      SmartDashboard.getNumber("Flywheel Bottom D", 0.0),
-      SmartDashboard.getNumber("Flywheel Bottom F", 0.0)
-    );
+    // Robot.flywheel.setTopConstants(
+    //   SmartDashboard.getNumber("Flywheel Top P", 0.0),
+    //   SmartDashboard.getNumber("Flywheel Top I", 0.0),
+    //   SmartDashboard.getNumber("Flywheel Top D", 0.0),
+    //   SmartDashboard.getNumber("Flywheel Top F", 0.0)
+    // );
+    // Robot.flywheel.setBottomConstants(
+    //   SmartDashboard.getNumber("Flywheel Bottom P", 0.0),
+    //   SmartDashboard.getNumber("Flywheel Bottom I", 0.0),
+    //   SmartDashboard.getNumber("Flywheel Bottom D", 0.0),
+    //   SmartDashboard.getNumber("Flywheel Bottom F", 0.0)
+    // );
 
     //get setpoints from smartdashboard and send them into the flywheel subsystem
     double topSetpoint = SmartDashboard.getNumber("Flywheel Top Setpoint", 0.0);

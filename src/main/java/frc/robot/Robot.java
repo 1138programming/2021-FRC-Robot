@@ -16,7 +16,6 @@ import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Storage;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Funnel;
-import frc.robot.subsystems.Pneumatics;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,7 +26,7 @@ import frc.robot.subsystems.Pneumatics;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  public static RobotContainer m_robotContainer;
 
   public static final Base base = new Base();
   public static final Camera camera = new Camera();
@@ -35,7 +34,6 @@ public class Robot extends TimedRobot {
   public static final Funnel funnel = new Funnel();
   public static final Intake intake = new Intake();
   public static final Storage storage = new Storage();
-  public static final Pneumatics pneumatics = new Pneumatics();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -43,9 +41,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    m_robotContainer = new RobotContainer();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
   }
 
   /**
