@@ -7,11 +7,11 @@ import static frc.robot.Constants.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
-import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+
 
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,6 +31,8 @@ public class Flywheel extends SubsystemBase {
   //Talon built-in sensor readings
   private double topSenVel;
   private double bottomSenVel;
+  private double topSenVelPercent;
+  private double bottomSenVelPercent;
   private double topSenPos;
   private double bottomSenPos;
   private double topRotPerSec;
@@ -40,16 +42,15 @@ public class Flywheel extends SubsystemBase {
   private double topPWMOutput = 0, bottomPWMOutput = 0;
   private double topSetpoint = 0, bottomSetpoint = 0;
   
-  //PID constatns initialization
-  private double flywheelTop_kP = 0;
-  private double flywheelTop_kI = 0;
-  private double flywheelTop_kD = 0;
-  private double flywheelBottom_kP = 0;
-  private double flywheelBottom_kI = 0;
-  private double flywheelBottom_kD = 0;
-
-  // private double flywheelTop_kF = 0;
-  // private double flywheelBottom_kF = 0;
+  //PID constatns
+  private double flywheelTop_kP = 0.16;
+  private double flywheelTop_kI = 0.0022;
+  private double flywheelTop_kD = 0.1;
+  private double flywheelTop_kF = 1;
+  private double flywheelBottom_kP = 0.4;
+  private double flywheelBottom_kI = 0.02;
+  private double flywheelBottom_kD = 0.095;
+  private double flywheelBottom_kF = 1;
 
   public Flywheel() 
   {
@@ -84,7 +85,10 @@ public class Flywheel extends SubsystemBase {
 
       //extracting raw sensor values from TalonFXSensorCollection objects
 		  topSenVel = topSensorVals.getIntegratedSensorVelocity(); /* position units per 100ms */
-		  bottomSenVel = bottomSensorVals.getIntegratedSensorVelocity();
+      bottomSenVel = bottomSensorVals.getIntegratedSensorVelocity();
+      
+      topSenVelPercent = topSenVel / 21630.0;
+      bottomSenVelPercent = bottomSenVel / 21630.0;
       
       //conversion to per second
 		  topRotPerSec = topSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
@@ -102,26 +106,32 @@ public class Flywheel extends SubsystemBase {
       topController.setTolerance(5, 10);
       bottomController.setTolerance(5, 10);
       
-      SmartDashboard.putNumber("Flywheel Top P", 0);
-      SmartDashboard.putNumber("Flywheel Top I", 0);
-      SmartDashboard.putNumber("Flywheel Top D", 0);
+      //create shuffleboard/smartdashboard input fields for pidf constants
+      // SmartDashboard.putNumber("Flywheel Top P", 0);
+      // SmartDashboard.putNumber("Flywheel Top I", 0);
+      // SmartDashboard.putNumber("Flywheel Top D", 0);
       // SmartDashboard.putNumber("Flywheel Top F", 0);
-      SmartDashboard.putNumber("Flywheel Bottom P", 0);
-      SmartDashboard.putNumber("Flywheel Bottom I", 0);
-      SmartDashboard.putNumber("Flywheel Bottom D", 0);
+      // SmartDashboard.putNumber("Flywheel Bottom P", 0);
+      // SmartDashboard.putNumber("Flywheel Bottom I", 0);
+      // SmartDashboard.putNumber("Flywheel Bottom D", 0);
       // SmartDashboard.putNumber("Flywheel Bottom F", 0);
     }
     
     @Override
     public void periodic() 
     {
-      SmartDashboard.putNumber("Top Flywheel PWM Output", topPWMOutput);
-      SmartDashboard.putNumber("Bottom Flywheel PWM Output", bottomPWMOutput);
-      SmartDashboard.putNumber("Top Rotation(per sec)", getTopRotPerSec());
-      SmartDashboard.putNumber("bottom Rotation(per sec)", getBottomRotPerSec());
+      SmartDashboard.putNumber("Top Flywheel Output", topPWMOutput);
+      SmartDashboard.putNumber("Bottom Flywheel Output", bottomPWMOutput);
+      SmartDashboard.putNumber("Top Velocity (Percent)", getTopVelPercent());
+      SmartDashboard.putNumber("Bottom Velocity (Percent)", getBottomVelPercent());
 
-      smartDashSetTopConstants();
-      smartDashSetBottomConstants();
+      //grab pidf constants from shuffleboard/smartdashboard
+      // smartDashSetTopConstants();
+      // smartDashSetBottomConstants();
+
+      double topSetpoint = SmartDashboard.getNumber("Top Flywheel Setpoint", 0.0);
+      double bottomSetpoint = SmartDashboard.getNumber("Bottom Flywheel Setpoint", 0.0);
+      setSetpoints(topSetpoint, bottomSetpoint);
    
       //get sensor raw values (packed in the form of TalonFXSensorCollection objects)
       TalonFXSensorCollection topSensorVals = flywheelTop.getSensorCollection();
@@ -133,6 +143,10 @@ public class Flywheel extends SubsystemBase {
   
       topSenVel = topSensorVals.getIntegratedSensorVelocity(); /* position units per 100ms */
       bottomSenVel = bottomSensorVals.getIntegratedSensorVelocity();
+
+      //Conversion from Talon unit to percent
+      topSenVelPercent = topSenVel / 21630.0;
+      bottomSenVelPercent = bottomSenVel / 21630.0;
       
       //conversion to per second
       topRotPerSec = topSenVel / kUnitsPerRevolution * 10; /* scale per100ms to perSecond */
@@ -155,14 +169,14 @@ public class Flywheel extends SubsystemBase {
   public void PIDMove() 
   {
     //calculate top and bottom output values using PID controller class
-    topPWMOutput = topLimiter.calculate(topController.calculate(topRotPerSec, topSetpoint));
-    bottomPWMOutput = bottomLimiter.calculate(bottomController.calculate(-bottomRotPerSec, bottomSetpoint)); //reversed rotation sensor input so the calculations would be right
-
-    //implement feedforward?
+    topPWMOutput = topLimiter.calculate(topController.calculate(topSenVelPercent, topSetpoint))
+                    +flywheelTop_kF * topSetpoint;
+    bottomPWMOutput = bottomLimiter.calculate(bottomController.calculate(-bottomSenVelPercent, bottomSetpoint)) 
+                      + flywheelBottom_kF * bottomSetpoint; //reversed rotation sensor input so the calculations would be right
 
     //send the output values to the motors
-    // flywheelTop.set(ControlMode.PercentOutput, topPWMOutput);
-    // flywheelBottom.set(ControlMode.PercentOutput, bottomPWMOutput);
+    flywheelTop.set(ControlMode.PercentOutput, topPWMOutput);
+    flywheelBottom.set(ControlMode.PercentOutput, bottomPWMOutput);
   }
 
   public double getTopRotPerSec() {
@@ -179,6 +193,14 @@ public class Flywheel extends SubsystemBase {
 
   public double getBottomVel() {
     return bottomSenVel;
+  }
+
+  public double getTopVelPercent() {
+    return topSenVelPercent;
+  }
+
+  public double getBottomVelPercent() {
+    return bottomSenVelPercent;
   }
   
   public double getTopPos() {
@@ -212,6 +234,16 @@ public class Flywheel extends SubsystemBase {
     this.bottomSetpoint = bottomSetpoint;
   }
 
+  public void setTopF(double kF)
+  {
+    flywheelTop_kF = kF;
+  }
+
+  public void setBottomF(double kF)
+  {
+    flywheelBottom_kF = kF;
+  }
+
   //reset the top and bottom PID controllers
   public void reset() {
     topController.reset();
@@ -223,7 +255,7 @@ public class Flywheel extends SubsystemBase {
     topController.setP(SmartDashboard.getNumber("Flywheel Top P", 0));
     topController.setI(SmartDashboard.getNumber("Flywheel Top I", 0));
     topController.setD(SmartDashboard.getNumber("Flywheel Top D", 0));
-    // topController.setF(Kf);
+    setTopF(SmartDashboard.getNumber("Flywheel Top F", 0));
   }
 
   //getting the bottom flywheel PID constants for the top PID controller from smartdashboard
@@ -231,7 +263,7 @@ public class Flywheel extends SubsystemBase {
     bottomController.setP(SmartDashboard.getNumber("Flywheel Bottom P", 0));
     bottomController.setI(SmartDashboard.getNumber("Flywheel Bottom I", 0));
     bottomController.setD(SmartDashboard.getNumber("Flywheel Bottom D", 0));
-    // bottomController.setF(Kf);
+    setBottomF(SmartDashboard.getNumber("Flywheel Bottom F", 0));
   }
 
   @Override

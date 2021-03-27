@@ -25,9 +25,6 @@ public class ManualMoveFlywheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      double topSetpoint = SmartDashboard.getNumber("Top Flywheel Setpoint", 0.0);
-      double bottomSetpoint = SmartDashboard.getNumber("Bottom Flywheel Setpoint", 0.0);
-      Robot.flywheel.setSetpoints(topSetpoint, bottomSetpoint);
       Robot.flywheel.PIDMove();
   }
 

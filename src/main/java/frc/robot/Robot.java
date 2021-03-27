@@ -16,7 +16,6 @@ import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Storage;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Funnel;
-import frc.robot.subsystems.Pneumatics;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
