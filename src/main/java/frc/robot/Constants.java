@@ -17,7 +17,7 @@ public final class Constants {
     public static final int KFlywheelBottomTalon = 1;   //confirmed
 
     //Funnel
-    public static final int KFunnelSpark = 10;
+    public static final int KFunnelSpark = 3;       //confirmed
 
     //Storage
     public static final int KStorageFrontSpark = 2; //confirmed

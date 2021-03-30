@@ -13,12 +13,13 @@ public class ManualMoveFunnel extends CommandBase {
 
     @Override
     public void initialize() {
+        SmartDashboard.putNumber("FunnelPWM", 0);
     }
 
     @Override
     public void execute() {
-        // double PWM = SmartDashboard.getNumber("FunnelPWM", 0);
-        // Robot.funnel.move(PWM);
+        double PWM = SmartDashboard.getNumber("FunnelPWM", 0);
+        Robot.funnel.move(PWM);
     }
 
     @Override
