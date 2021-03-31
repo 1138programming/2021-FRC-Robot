@@ -25,8 +25,14 @@ public final class Constants {
     public static final int KBallSensor1 = 1;       //confirmed
     //public static final int KBallSensor2 = 14;
 
+    //Intake
+    public static final int KIntakeSpark = 0;
+
 // Default PWM Values
     //Funnel
     public static final double KFunnelPWM = 1;
     public static final double KStoragePWM = 0.7;
+
+    //Intake
+    public static final double KIntakePWM = 1;
 }

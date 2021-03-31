@@ -15,6 +15,10 @@ import frc.robot.commands.Funnel.FunnelOut;
 import frc.robot.commands.Funnel.FunnelStop;
 import frc.robot.commands.Funnel.ManualMoveFunnel;
 
+import frc.robot.commands.Intake.IntakeStop;
+import frc.robot.commands.Intake.IntakeIn;
+import frc.robot.commands.Intake.IntakeOut;
+
 import frc.robot.commands.Storage.StorageIn;
 import frc.robot.commands.Storage.StorageOut;
 import frc.robot.commands.Storage.StorageStop;
@@ -69,6 +73,7 @@ public class RobotContainer {
     Robot.flywheel.setDefaultCommand(new ManualMoveFlywheel());
     Robot.funnel.setDefaultCommand(new ManualMoveFunnel());
     Robot.storage.setDefaultCommand(new ManualMoveStorage());
+    Robot.intake.setDefaultCommand(new IntakeStop());
 
     // Controllers
     logitech = new Joystick(KLogitechDrive);
