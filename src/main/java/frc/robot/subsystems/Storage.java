@@ -53,7 +53,7 @@ public class Storage extends SubsystemBase {
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("storageFrontPWM", getStorageFrontPWM());
     // SmartDashboard.putNumber("storageBackPWM", getStorageBackPWM());
-    // SmartDashboard.putBoolean("BS1", getBallSensor1());
+    SmartDashboard.putBoolean("BS1", getBallSensor1());
 
   }
 

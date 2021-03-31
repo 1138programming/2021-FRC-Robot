@@ -120,10 +120,10 @@ public class Flywheel extends SubsystemBase {
     @Override
     public void periodic() 
     {
-      SmartDashboard.putNumber("Top Flywheel Output", topPWMOutput);
-      SmartDashboard.putNumber("Bottom Flywheel Output", bottomPWMOutput);
-      SmartDashboard.putNumber("Top Velocity (Percent)", getTopVelPercent());
-      SmartDashboard.putNumber("Bottom Velocity (Percent)", getBottomVelPercent());
+      // SmartDashboard.putNumber("Top Flywheel Output", topPWMOutput);
+      // SmartDashboard.putNumber("Bottom Flywheel Output", bottomPWMOutput);
+      // SmartDashboard.putNumber("Top Velocity (Percent)", getTopVelPercent());
+      // SmartDashboard.putNumber("Bottom Velocity (Percent)", getBottomVelPercent());
 
       //grab pidf constants from shuffleboard/smartdashboard
       // smartDashSetTopConstants();

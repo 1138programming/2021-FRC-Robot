@@ -68,7 +68,7 @@ public class RobotContainer {
     // Set default commands-commands that run on default without any user input
     Robot.flywheel.setDefaultCommand(new ManualMoveFlywheel());
     Robot.funnel.setDefaultCommand(new ManualMoveFunnel());
-    Robot.storage.setDefaultCommand(new StorageStop());
+    Robot.storage.setDefaultCommand(new ManualMoveStorage());
 
     // Controllers
     logitech = new Joystick(KLogitechDrive);
@@ -146,6 +146,14 @@ public class RobotContainer {
     } else {
       return 0;
     }
+  }
+
+  public double getXboxLeftAxis() {
+    final double Y = xbox.getRawAxis(KLeftYAxis);
+    if(Y > KDeadZone || Y < -KDeadZone)
+      return -Y;
+    else 
+      return 0;
   }
 
   public double getXboxLeftXAxis() {
