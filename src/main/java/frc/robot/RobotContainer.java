@@ -25,6 +25,8 @@ import frc.robot.commands.Storage.StorageStop;
 import frc.robot.commands.Storage.ManualMoveStorage;
 import frc.robot.commands.Storage.LoadBall;
 
+import frc.robot.CommandGroups.*;
+
 public class RobotContainer {
   // Controller Constants
   private static final int KLogitechDrive = 0;
@@ -106,7 +108,15 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
+
+    FeedIntoFlywheel feedIntoFlywheel = new FeedIntoFlywheel();
+
+    xboxBtnRT.whileHeld(feedIntoFlywheel);
+
+    xboxBtnLT.whileHeld(new FunnelIn());
     
+    xboxBtnX.whileHeld(new StorageIn());
+
   }
 
   /**
