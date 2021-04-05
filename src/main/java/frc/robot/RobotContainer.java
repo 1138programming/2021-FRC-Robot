@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.Flywheel.StopFlywheel;
 import frc.robot.commands.Flywheel.SpinUpFlywheel;
+import frc.robot.commands.Base.SwerveWithJoysticks;
 import frc.robot.commands.Flywheel.ManualMoveFlywheel;
 
 import frc.robot.commands.Funnel.FunnelIn;
@@ -33,7 +34,7 @@ public class RobotContainer {
   private static final int KXboxArms = 1;  
 
   //Deadzone
-  private static final double KDeadZone = 0.02;
+  private static final double KDeadZone = 0.05;
 
   //Logitech Button Constants
   public static final int KLogitechButtonX = 1;
@@ -73,9 +74,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Set default commands-commands that run on default without any user input
     Robot.flywheel.setDefaultCommand(new ManualMoveFlywheel());
-    Robot.funnel.setDefaultCommand(new ManualMoveFunnel());
-    Robot.storage.setDefaultCommand(new ManualMoveStorage());
+    Robot.funnel.setDefaultCommand(new FunnelStop());
+    Robot.storage.setDefaultCommand(new StorageStop());
     Robot.intake.setDefaultCommand(new IntakeStop());
+    Robot.base.setDefaultCommand(new SwerveWithJoysticks());
 
     // Controllers
     logitech = new Joystick(KLogitechDrive);
@@ -110,12 +112,18 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     FeedIntoFlywheel feedIntoFlywheel = new FeedIntoFlywheel();
+    MoveBallIn moveballIn = new MoveBallIn();
+    EjectBalls ejectBalls = new EjectBalls();
 
-    xboxBtnRT.whileHeld(feedIntoFlywheel);
+    xboxBtnRB.whileHeld(feedIntoFlywheel);
 
-    xboxBtnLT.whileHeld(new FunnelIn());
+    xboxBtnLB.whileHeld(moveballIn); //move funnel while held, storage is triggered once ball is detected
     
-    xboxBtnX.whileHeld(new StorageIn());
+    // xboxBtnX.whileHeld(new StorageIn());
+    
+    xboxBtnY.toggleWhenActive(new SpinUpFlywheel());
+
+    xboxBtnA.whileHeld(ejectBalls);
 
   }
 
@@ -126,7 +134,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new Auton1();
   }
 
   public double getLogiRightYAxis() {

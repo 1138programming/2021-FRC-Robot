@@ -5,22 +5,22 @@ import edu.wpi.first.wpilibj.util.Units;
 public final class Constants {
 // Motors IDs
     //Base
-    public static final int frontLeftDriveId = 8; 
-    public static final int frontLeftCANifierId = 12; 
-    public static final int frontLeftSteerId = 2;
+    public static final int frontLeftDriveId = 9; 
+    public static final int frontLeftCANifierId = 9; 
+    public static final int frontLeftSteerId = 8;
     public static final int frontRightDriveId = 7; 
     public static final int frontRightCANifierId = 11; 
     public static final int frontRightSteerId = 5; 
     public static final int backLeftDriveId = 6; 
-    public static final int backLeftCANifierId = 9; 
+    public static final int backLeftCANifierId = 10; 
     public static final int backLeftSteerId = 3;
     public static final int backRightDriveId = 1; 
-    public static final int backRightCANifierId = 10; 
+    public static final int backRightCANifierId = 12; 
     public static final int backRightSteerId = 4; 
 
     //FLywheel
     public static final int KFlywheelTopTalon = 2;      //confirmed
-    public static final int KFlywheelBottomTalon = 1;   //confirmed
+    public static final int KFlywheelBottomTalon = 10;   //confirmed
 
     //Funnel
     public static final int KFunnelSpark = 3;       //confirmed
@@ -36,7 +36,7 @@ public final class Constants {
 
 // Default PWM Values
     //Funnel
-    public static final double KFunnelPWM = 1;
+    public static final double KFunnelPWM = 0.6;
     public static final double KStoragePWM = 0.7;
 
     //Intake

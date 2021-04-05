@@ -115,6 +115,9 @@ public class Flywheel extends SubsystemBase {
       // SmartDashboard.putNumber("Flywheel Bottom I", 0);
       // SmartDashboard.putNumber("Flywheel Bottom D", 0);
       // SmartDashboard.putNumber("Flywheel Bottom F", 0);
+
+      SmartDashboard.putNumber("Top Flywheel Setpoint", 0.0);
+      SmartDashboard.putNumber("Bottom Flywheel Setpoint", 0.0);
     }
     
     @Override
@@ -129,9 +132,9 @@ public class Flywheel extends SubsystemBase {
       // smartDashSetTopConstants();
       // smartDashSetBottomConstants();
 
-      double topSetpoint = SmartDashboard.getNumber("Top Flywheel Setpoint", 0.0);
-      double bottomSetpoint = SmartDashboard.getNumber("Bottom Flywheel Setpoint", 0.0);
-      setSetpoints(topSetpoint, bottomSetpoint);
+      // double topSetpoint = SmartDashboard.getNumber("Top Flywheel Setpoint", 0.0);
+      // double bottomSetpoint = SmartDashboard.getNumber("Bottom Flywheel Setpoint", 0.0);
+      // setSetpoints(topSetpoint, bottomSetpoint);
    
       //get sensor raw values (packed in the form of TalonFXSensorCollection objects)
       TalonFXSensorCollection topSensorVals = flywheelTop.getSensorCollection();

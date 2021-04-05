@@ -17,8 +17,13 @@ public class SpinUpFlywheel extends CommandBase
     //setting top and bottom setpoints in this command
     this.topSetpoint = topSetpoint;
     this.bottomSetpoint = bottomSetpoint;
-
+    
     addRequirements(Robot.flywheel);
+  }
+  
+  public SpinUpFlywheel() 
+  {
+    this(0.6, 0.6);
   }
 
   // Called when the command is initially scheduled.
@@ -33,23 +38,10 @@ public class SpinUpFlywheel extends CommandBase
   @Override
   public void execute() 
   {
-    //getting the PID constants from smartdashboard and setting them 
-    // Robot.flywheel.setTopConstants(
-    //   SmartDashboard.getNumber("Flywheel Top P", 0.0),
-    //   SmartDashboard.getNumber("Flywheel Top I", 0.0),
-    //   SmartDashboard.getNumber("Flywheel Top D", 0.0),
-    //   SmartDashboard.getNumber("Flywheel Top F", 0.0)
-    // );
-    // Robot.flywheel.setBottomConstants(
-    //   SmartDashboard.getNumber("Flywheel Bottom P", 0.0),
-    //   SmartDashboard.getNumber("Flywheel Bottom I", 0.0),
-    //   SmartDashboard.getNumber("Flywheel Bottom D", 0.0),
-    //   SmartDashboard.getNumber("Flywheel Bottom F", 0.0)
-    // );
-
     //get setpoints from smartdashboard and send them into the flywheel subsystem
-    double topSetpoint = SmartDashboard.getNumber("Flywheel Top Setpoint", 0.0);
-    double bottomSetpoint = SmartDashboard.getNumber("Flywheel Bottom Setpoint", 0.0);
+    // double topSetpoint = SmartDashboard.getNumber("Flywheel Top Setpoint", 0.0);
+    // double bottomSetpoint = SmartDashboard.getNumber("Flywheel Bottom Setpoint", 0.0);
+    
     Robot.flywheel.setSetpoints(topSetpoint, bottomSetpoint);
 
     //move the flywheel according to the PID controller calculations
