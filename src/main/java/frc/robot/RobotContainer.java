@@ -125,6 +125,8 @@ public class RobotContainer {
 
     xboxBtnA.whileHeld(ejectBalls);
 
+    xboxBtnX.whileHeld(new IntakeIn());
+
   }
 
   /**

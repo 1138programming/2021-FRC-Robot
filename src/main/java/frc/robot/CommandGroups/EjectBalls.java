@@ -12,7 +12,7 @@ public class EjectBalls extends SequentialCommandGroup {
     addCommands(
       parallel (
         new StorageOut(),
-        new IntakeOut(),
+        //new IntakeOut(),
         new FunnelOut()
       )
     );

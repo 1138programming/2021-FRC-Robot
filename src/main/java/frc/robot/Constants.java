@@ -32,7 +32,7 @@ public final class Constants {
     //public static final int KBallSensor2 = 14;
 
     //Intake
-    public static final int KIntakeSpark = 0;
+    public static final int KIntakeSpark = 4;
 
 // Default PWM Values
     //Funnel
@@ -40,7 +40,7 @@ public final class Constants {
     public static final double KStoragePWM = 0.7;
 
     //Intake
-    public static final double KIntakePWM = 1;
+    public static final double KIntakePWM = 0.75;
 
 //Base Constants
     public static final double kMaxSpeed = Units.feetToMeters(13.6) / 100; // 20 feet per second

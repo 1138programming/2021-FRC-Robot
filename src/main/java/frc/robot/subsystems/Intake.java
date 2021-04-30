@@ -18,6 +18,7 @@ public class Intake extends SubsystemBase {
 
   //Create victor
   private final CANSparkMax intake;
+  private double intakePWM = 0;
   
   public Intake() {
 
@@ -37,10 +38,16 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("intakeFrontPWM", getIntakePWM());
   }
 
   public void move(double PWM) {
-      intake.set(PWM);
+    intakePWM = -PWM;
+    intake.set(-PWM);
+  }
+
+  public double getIntakePWM(){
+    return intakePWM;
   }
 
   @Override

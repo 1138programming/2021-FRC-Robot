@@ -14,7 +14,7 @@ public class FeedIntoFlywheel extends SequentialCommandGroup {
 	public FeedIntoFlywheel() {
         addCommands(
             parallel(
-                // new IntakeIn(),
+                //new IntakeIn(),
                 new FunnelIn(),
                 new StorageIn()
             )

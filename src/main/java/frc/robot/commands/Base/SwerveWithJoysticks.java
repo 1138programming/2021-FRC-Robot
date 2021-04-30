@@ -26,14 +26,14 @@ public class SwerveWithJoysticks extends CommandBase {
     // Get the x speed. We are inverting this because Xbox controllers return
     // negative values when we push forward.
     final var xSpeed =
-      xspeedLimiter.calculate(Robot.m_robotContainer.getLogiLeftYAxis())
+      -xspeedLimiter.calculate(Robot.m_robotContainer.getLogiLeftYAxis())
         * kMaxSpeed;
 
     // Get the y speed or sideways/strafe speed. We are inverting this because
     // we want a positive value when we pull to the left. Xbox controllers
     // return positive values when you pull to the right by default.
     final var ySpeed =
-      yspeedLimiter.calculate(Robot.m_robotContainer.getLogiLeftXAxis())
+      -yspeedLimiter.calculate(Robot.m_robotContainer.getLogiLeftXAxis())
         * kMaxSpeed;
 
     // Get the rate of angular rotation. We are inverting this because we want a
@@ -41,7 +41,7 @@ public class SwerveWithJoysticks extends CommandBase {
     // mathematics). Xbox controllers return positive values when you pull to
     // the right by default.
     final var rot =
-      rotLimiter.calculate(Robot.m_robotContainer.getLogiRightXAxis())
+      -rotLimiter.calculate(Robot.m_robotContainer.getLogiRightXAxis())
         * kMaxAngularSpeed;
 
     //boolean calibrate = controller.getBumper(GenericHID.Hand.kLeft);

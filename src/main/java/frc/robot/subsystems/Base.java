@@ -51,6 +51,7 @@ public class Base extends SubsystemBase {
     );
 
   modules = new SwerveModuleMK3[] {
+    
 
     new SwerveModuleMK3(new TalonFX(frontLeftDriveId), new TalonFX(frontLeftSteerId), new CANifier(frontLeftCANifierId), Rotation2d.fromDegrees(frontLeftOffset)), // Front Left
     new SwerveModuleMK3(new TalonFX(frontRightDriveId), new TalonFX(frontRightSteerId), new CANifier(frontRightCANifierId), Rotation2d.fromDegrees(frontRightOffset)), // Front Right
@@ -94,6 +95,10 @@ public class Base extends SubsystemBase {
     module.setDesiredState(state);
     //SmartDashboard.putNumber("gyro Angle", gyro.getAngle());
   }
+  // SwerveModuleMK3 module3 = modules[3];
+  // SwerveModuleState state = states[3];
+  // module3.setDesiredState(state);
+
 }
 
 public void resetGyro() {
@@ -116,7 +121,7 @@ public void periodic() {
   SmartDashboard.putNumber("Desired Ticks", modules[3].getDesiredTicks());
   SmartDashboard.putNumber("Closed Loop Target", modules[3].getSelectedSensonPosition());
 
-  setModuleGains(SmartDashboard.getNumber("Base kP", 0.0), SmartDashboard.getNumber("Base kI", 0.0), SmartDashboard.getNumber("Base kD", 0.0));
+  // setModuleGains(SmartDashboard.getNumber("Base kP", 0.0), SmartDashboard.getNumber("Base kI", 0.0), SmartDashboard.getNumber("Base kD", 0.0));
 
   SmartDashboard.putNumber("Current Tick", modules[3].getCurrentTicks());
   //SmartDashboard.putNumber("SetPoint", modules[3].getSetpoint());
@@ -126,7 +131,7 @@ public void periodic() {
 public void setModuleGains(double kP, double kI, double kD){
   // modules[1].setAnglePIDGains(kP, kI, kD);
   // modules[2].setAnglePIDGains(kP, kI, kD);
-  modules[3].setAnglePIDGains(kP, kI, kD);
+  // modules[3].setAnglePIDGains(kP, kI, kD);
   // modules[4].setAnglePIDGains(kP, kI, kD);
 }
 

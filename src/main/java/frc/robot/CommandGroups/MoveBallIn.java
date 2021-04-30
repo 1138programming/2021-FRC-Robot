@@ -15,7 +15,7 @@ public class MoveBallIn extends SequentialCommandGroup {
 	public MoveBallIn() {
         addCommands(
             parallel(
-                // new IntakeIn(),
+                //new IntakeIn(),
                 new FunnelIn(),
                 new LoadBall()
             )
