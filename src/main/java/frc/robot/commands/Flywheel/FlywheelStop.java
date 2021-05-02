@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.robot.Constants.*;
 
 
-public class StopFlywheel extends CommandBase 
+public class FlywheelStop extends CommandBase 
 {
   
-  public StopFlywheel() 
+  public FlywheelStop() 
   {
     addRequirements(Robot.flywheel);
   }

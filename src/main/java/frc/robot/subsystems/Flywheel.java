@@ -106,7 +106,7 @@ public class Flywheel extends SubsystemBase {
       topController.setTolerance(5, 10);
       bottomController.setTolerance(5, 10);
       
-      //create shuffleboard/smartdashboard input fields for pidf constants
+      //create shuffleboard/smartdashboard input fields for pidf constants tuning
       // SmartDashboard.putNumber("Flywheel Top P", 0);
       // SmartDashboard.putNumber("Flywheel Top I", 0);
       // SmartDashboard.putNumber("Flywheel Top D", 0);
@@ -123,6 +123,7 @@ public class Flywheel extends SubsystemBase {
     @Override
     public void periodic() 
     {
+      //SmartDashboard prints for tuning
       // SmartDashboard.putNumber("Top Flywheel Output", topPWMOutput);
       // SmartDashboard.putNumber("Bottom Flywheel Output", bottomPWMOutput);
       // SmartDashboard.putNumber("Top Velocity (Percent)", getTopVelPercent());

@@ -59,9 +59,9 @@ public class Base extends SubsystemBase {
 
   };
 
-  SmartDashboard.putNumber("Base kP", 0.0);
-  SmartDashboard.putNumber("Base kI", 0.0);
-  SmartDashboard.putNumber("Base kD", 0.0);
+  // SmartDashboard.putNumber("Base kP", 0.0);
+  // SmartDashboard.putNumber("Base kI", 0.0);
+  // SmartDashboard.putNumber("Base kD", 0.0);
   
   gyro.reset(); 
   }
@@ -90,7 +90,6 @@ public class Base extends SubsystemBase {
   for (int i = 0; i < states.length; i++) {
     SwerveModuleMK3 module = modules[i];
     SwerveModuleState state = states[i];
-    //below is a line to comment out from step 5
     module.setDesiredState(state);
     //SmartDashboard.putNumber("gyro Angle", gyro.getAngle());
   }
@@ -109,24 +108,22 @@ public void zeroEncoder() {
 
 @Override
 public void periodic() {
-  SmartDashboard.putNumber("Left Front Raw Angle", modules[0].getRawAngle());
-  SmartDashboard.putNumber("Right Front Raw Angle", modules[1].getRawAngle());
-  SmartDashboard.putNumber("Left Back Raw Angle", modules[2].getRawAngle());
-  SmartDashboard.putNumber("Right Back Raw Angle", modules[3].getRawAngle());
-  SmartDashboard.putNumber("Desired Ticks", modules[3].getDesiredTicks());
-  SmartDashboard.putNumber("Closed Loop Target", modules[3].getSelectedSensonPosition());
+  // SmartDashboard.putNumber("Left Front Raw Angle", modules[0].getRawAngle());
+  // SmartDashboard.putNumber("Right Front Raw Angle", modules[1].getRawAngle());
+  // SmartDashboard.putNumber("Left Back Raw Angle", modules[2].getRawAngle());
+  // SmartDashboard.putNumber("Right Back Raw Angle", modules[3].getRawAngle());
+  // SmartDashboard.putNumber("Desired Ticks", modules[3].getDesiredTicks());
+  // SmartDashboard.putNumber("Closed Loop Target", modules[3].getSelectedSensonPosition());
 
-  setModuleGains(SmartDashboard.getNumber("Base kP", 0.0), SmartDashboard.getNumber("Base kI", 0.0), SmartDashboard.getNumber("Base kD", 0.0));
-
-  SmartDashboard.putNumber("Current Tick", modules[3].getCurrentTicks());
-  //SmartDashboard.putNumber("SetPoint", modules[3].getSetpoint());
-  // This method will be called once per scheduler run
+  //getting angle motor PID gains from SmartDashboard and setting them
+  // setModuleGains(SmartDashboard.getNumber("Base kP", 0.0), SmartDashboard.getNumber("Base kI", 0.0), SmartDashboard.getNumber("Base kD", 0.0));
 }
 
 public void setModuleGains(double kP, double kI, double kD){
+  //used for PID gains tuning
   // modules[1].setAnglePIDGains(kP, kI, kD);
   // modules[2].setAnglePIDGains(kP, kI, kD);
-  modules[3].setAnglePIDGains(kP, kI, kD);
+  // modules[3].setAnglePIDGains(kP, kI, kD);
   // modules[4].setAnglePIDGains(kP, kI, kD);
 }
 

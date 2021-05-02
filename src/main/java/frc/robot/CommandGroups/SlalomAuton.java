@@ -9,6 +9,7 @@ public class SlalomAuton extends SequentialCommandGroup {
 	public SlalomAuton() {
         addCommands(
             sequence(
+                //Testing needed!
                 // new MoveBaseFor(0.65, 1, 200),     //Forward --> left
                 // new MoveBaseFor(1, 1, 1000),       //Forward
                 // new MoveBaseFor(1, 0.9, 2000),     //Right curve

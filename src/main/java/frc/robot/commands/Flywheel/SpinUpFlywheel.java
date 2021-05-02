@@ -38,9 +38,6 @@ public class SpinUpFlywheel extends CommandBase
   @Override
   public void execute() 
   {
-    //get setpoints from smartdashboard and send them into the flywheel subsystem
-    // double topSetpoint = SmartDashboard.getNumber("Flywheel Top Setpoint", 0.0);
-    // double bottomSetpoint = SmartDashboard.getNumber("Flywheel Bottom Setpoint", 0.0);
     
     Robot.flywheel.setSetpoints(topSetpoint, bottomSetpoint);
 

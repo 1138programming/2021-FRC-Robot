@@ -25,12 +25,12 @@ public class Funnel extends SubsystemBase {
     // funnel.setSmartCurrentLimit(30, 30, 3000);
     funnel.setIdleMode(IdleMode.kBrake);
     // funnel.burnFlash();
+    SmartDashboard.putNumber("FunnelPWM", 0);
   }
 
   @Override
   public void periodic() {
     //This method is called once per scheduler run
-    SmartDashboard.putNumber("funnelFrontPWM", getFunelPWM());
   }
 
   @Override

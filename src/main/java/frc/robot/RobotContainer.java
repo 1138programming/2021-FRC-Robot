@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import frc.robot.commands.Flywheel.StopFlywheel;
+import frc.robot.commands.Flywheel.FlywheelStop;
 import frc.robot.commands.Flywheel.SpinUpFlywheel;
 import frc.robot.commands.Base.SwerveWithJoysticks;
 import frc.robot.commands.Flywheel.ManualMoveFlywheel;
@@ -73,11 +73,11 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Set default commands-commands that run on default without any user input
-    Robot.flywheel.setDefaultCommand(new ManualMoveFlywheel());
-    Robot.funnel.setDefaultCommand(new FunnelStop());
-    Robot.storage.setDefaultCommand(new StorageStop());
-    Robot.intake.setDefaultCommand(new IntakeStop());
     Robot.base.setDefaultCommand(new SwerveWithJoysticks());
+    Robot.flywheel.setDefaultCommand(new FlywheelStop());
+    Robot.funnel.setDefaultCommand(new FunnelStop());
+    Robot.intake.setDefaultCommand(new IntakeStop());
+    Robot.storage.setDefaultCommand(new StorageStop());
 
     // Controllers
     logitech = new Joystick(KLogitechDrive);
@@ -134,7 +134,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new Auton1();
+    return null;
   }
 
   public double getLogiRightYAxis() {

@@ -45,6 +45,8 @@ public class MoveBaseFor extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
+        //time-approach, bad!! 
+        //need to implement encoder tick approach
         return (duration != 0) && (System.currentTimeMillis() - startTime) > duration;
     }
 }

@@ -18,20 +18,15 @@ public class ManualMoveStorage extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    // SmartDashboard.putNumber("StoragePWM", 0);
-    
+  public void initialize() {    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // SmartDashboard.putBoolean("StorageSensor1", Robot.storage.getBallSensor1());
-    // double PWM = SmartDashboard.getNumber("StoragePWM", 0);
-    double PWM = Robot.m_robotContainer.getXboxLeftAxis();
-    SmartDashboard.putNumber("StoragePWM", PWM);
-    // Robot.storage.moveFront(PWM);
-    // Robot.storage.moveBack(PWM);
+    double PWM = SmartDashboard.getNumber("StoragePWM", 0);
+    Robot.storage.moveFront(PWM);
+    Robot.storage.moveBack(PWM);
   }
 
   // Called once the command ends or is interrupted.

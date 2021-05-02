@@ -13,7 +13,6 @@ public class ManualMoveFunnel extends CommandBase {
 
     @Override
     public void initialize() {
-        SmartDashboard.putNumber("FunnelPWM", 0);
     }
 
     @Override
