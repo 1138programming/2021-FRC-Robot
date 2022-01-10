@@ -22,7 +22,8 @@ public class SwerveModuleMK3 {
 
   private static final Gains kDriveGains = new Gains(15, 0.01, 0.1, 0.2, 0, 1.0);
   // P = 0.75, I= 0.0, D = 0.05
-  private static final Gains kAngleGains = new Gains(0.6, 0.0, 0.25, 0.0, 0, 1.0);
+  private static final Gains kAngleGains = new Gains(0.5, 0.0, 0.25, 0.0, 0, 1.0);
+  // private static final Gains kAngleGains = new Gains(0.0, 0.0, 0.0, 0.0, 0, 0.0);
 
   // CANCoder has 4096 ticks/rotation
   private static double kEncoderTicksPerRotation = 4096;
@@ -139,13 +140,14 @@ public class SwerveModuleMK3 {
       desiredTicks = -maxDeltaTicks;
     }
 
-    //below is a line to comment out from step 5
     angleMotor.set(TalonFXControlMode.Position, desiredTicks);
 
     double feetPerSecond = Units.metersToFeet(state.speedMetersPerSecond)/2;
 
-    //below is a line to comment out from step 5
-    driveMotor.set(TalonFXControlMode.PercentOutput, feetPerSecond / kMaxSpeed);
+    // driveMotor.set(TalonFXControlMode.PercentOutput, feetPerSecond / kMaxSpeed);
+  }
+  public void resetAngleMotor(){
+    angleMotor.set(TalonFXControlMode.Position, 0);
   }
   public void setAnglePIDGains(double kP, double kI, double kD){
     angleMotor.config_kP(0, kP, 0);

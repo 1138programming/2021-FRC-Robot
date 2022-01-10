@@ -52,7 +52,6 @@ public class Base extends SubsystemBase {
 
   modules = new SwerveModuleMK3[] {
     
-
     new SwerveModuleMK3(new TalonFX(frontLeftDriveId), new TalonFX(frontLeftSteerId), new CANifier(frontLeftCANifierId), Rotation2d.fromDegrees(frontLeftOffset)), // Front Left
     new SwerveModuleMK3(new TalonFX(frontRightDriveId), new TalonFX(frontRightSteerId), new CANifier(frontRightCANifierId), Rotation2d.fromDegrees(frontRightOffset)), // Front Right
     new SwerveModuleMK3(new TalonFX(backLeftDriveId), new TalonFX(backLeftSteerId), new CANifier(backLeftCANifierId), Rotation2d.fromDegrees(backLeftOffset)), // Back Left
@@ -88,21 +87,41 @@ public class Base extends SubsystemBase {
         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(-gyro.getAngle()))
         : new ChassisSpeeds(xSpeed, ySpeed, rot));
   SwerveDriveKinematics.normalizeWheelSpeeds(states, kMaxSpeed);
-  for (int i = 0; i < states.length; i++) {
+  // for (int i = 0; i < states.length; i++) {
+  //   SwerveModuleMK3 module = modules[i];
+  //   SwerveModuleState state = states[i];
+  //   //below is a line to comment out from step 5
+  //   module.setDesiredState(state);
+  // }
+  for (int i = 0; i < states.length; i = i + 2) {
     SwerveModuleMK3 module = modules[i];
     SwerveModuleState state = states[i];
     //below is a line to comment out from step 5
     module.setDesiredState(state);
-    //SmartDashboard.putNumber("gyro Angle", gyro.getAngle());
   }
-  // SwerveModuleMK3 module3 = modules[3];
-  // SwerveModuleState state = states[3];
-  // module3.setDesiredState(state);
 
+  // SwerveModuleMK3 module = modules[0];
+  // SwerveModuleState state = states[0];
+  // module.setDesiredState(state);
+
+
+    //SmartDashboard.putNumber("gyro Angle", gyro.getAngle());
 }
 
 public void resetGyro() {
   gyro.reset(); //recalibrates gyro offset
+}
+
+//DOESNT WORK!!
+public void resetAllAngleMotors(){
+  // for (int i = 0; i < modules.length; i = i++) {
+  //   SwerveModuleMK3 module = modules[i];
+  //   module.resetAngleMotor();
+  // }
+  // for (int i = 0; i < modules.length; i = i+ 2) {
+    SwerveModuleMK3 module = modules[2];
+    module.resetAngleMotor();
+  // }
 }
 
 public void zeroEncoder() {

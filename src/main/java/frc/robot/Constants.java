@@ -6,7 +6,7 @@ public final class Constants {
 // Motors IDs
     //Base
     public static final int frontLeftDriveId = 9; 
-    public static final int frontLeftCANifierId = 9; 
+    public static final int frontLeftCANifierId = 2; 
     public static final int frontLeftSteerId = 8;
     public static final int frontRightDriveId = 7; 
     public static final int frontRightCANifierId = 11; 

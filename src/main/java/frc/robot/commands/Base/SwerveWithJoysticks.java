@@ -4,6 +4,7 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class SwerveWithJoysticks extends CommandBase {
@@ -19,6 +20,7 @@ public class SwerveWithJoysticks extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Robot.base.resetAllAngleMotors();
   }
   
   @Override
@@ -27,14 +29,14 @@ public class SwerveWithJoysticks extends CommandBase {
     // negative values when we push forward.
     final var xSpeed =
       -xspeedLimiter.calculate(Robot.m_robotContainer.getLogiLeftYAxis())
-        * kMaxSpeed;
+        * kMaxSpeed * 0.4;
 
     // Get the y speed or sideways/strafe speed. We are inverting this because
     // we want a positive value when we pull to the left. Xbox controllers
     // return positive values when you pull to the right by default.
     final var ySpeed =
       -yspeedLimiter.calculate(Robot.m_robotContainer.getLogiLeftXAxis())
-        * kMaxSpeed;
+        * kMaxSpeed * 0.4;
 
     // Get the rate of angular rotation. We are inverting this because we want a
     // positive value when we pull to the left (remember, CCW is positive in
@@ -42,10 +44,10 @@ public class SwerveWithJoysticks extends CommandBase {
     // the right by default.
     final var rot =
       -rotLimiter.calculate(Robot.m_robotContainer.getLogiRightXAxis())
-        * kMaxAngularSpeed;
+        * kMaxAngularSpeed * 0.4;
 
     //boolean calibrate = controller.getBumper(GenericHID.Hand.kLeft);
-
+    
     Robot.base.drive(xSpeed, ySpeed, rot, true);
   }
     // Called once the command ends or is interrupted.
