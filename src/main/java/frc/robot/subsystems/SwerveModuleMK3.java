@@ -52,7 +52,7 @@ public class SwerveModuleMK3 {
     
     angleMotor.setNeutralMode(NeutralMode.Brake); //not needed but nice to keep the robot stopped when you want it stopped
 
-    angleMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+    angleMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 
     //driveMotor.configAllowableClosedloopError(0, 0, 0);
 
