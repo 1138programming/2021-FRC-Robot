@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import frc.robot.commands.Base.LinearActuate;
+
 import frc.robot.commands.Flywheel.StopFlywheel;
 import frc.robot.commands.Flywheel.SpinUpFlywheel;
 import frc.robot.commands.Base.SwerveWithJoysticks;
@@ -126,6 +128,9 @@ public class RobotContainer {
     xboxBtnA.whileHeld(ejectBalls);
 
     xboxBtnX.whileHeld(new IntakeIn());
+
+    logitechBtnA.whenPressed(new LinearActuate(1));
+    logitechBtnB.whenPressed(new LinearActuate(-1));
 
   }
 

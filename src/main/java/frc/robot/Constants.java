@@ -34,15 +34,16 @@ public final class Constants {
     //Intake
     public static final int KIntakeSpark = 4;
 
-// Default PWM Values
+    
+    // Default PWM Values
     //Funnel
     public static final double KFunnelPWM = 0.6;
     public static final double KStoragePWM = 0.7;
-
+    
     //Intake
     public static final double KIntakePWM = 0.75;
-
-//Base Constants
+    
+    //Base Constants
     public static final double kMaxSpeed = Units.feetToMeters(13.6) / 100; // 20 feet per second
     public static final double kMaxAngularSpeed = Math.PI; // 1/2 rotation per second
     public static final double ticksPerRevolution = 4096;
@@ -52,4 +53,6 @@ public final class Constants {
     public static double backLeftOffset = 0;
     public static double backRightOffset = 0;
     
+//Other
+    public static final int KLinearActuator = 5;
 }

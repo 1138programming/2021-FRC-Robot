@@ -19,8 +19,10 @@ import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.Servo;
 
 public class Base extends SubsystemBase {
    
@@ -30,7 +32,14 @@ public class Base extends SubsystemBase {
 
   private SwerveModuleMK3[] modules;
 
+  private Servo linearActuator;
+
   public Base() {
+
+    linearActuator = new Servo(KLinearActuator);
+    linearActuator.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+
+
     kinematics = new SwerveDriveKinematics(
       new Translation2d(
         Units.inchesToMeters(14.5),
@@ -106,6 +115,11 @@ public class Base extends SubsystemBase {
 
 
     //SmartDashboard.putNumber("gyro Angle", gyro.getAngle());
+}
+
+public void linearActuatorMove(double amount){
+  System.out.println("================> amount " + amount);
+  linearActuator.setSpeed(amount);
 }
 
 public void resetGyro() {
